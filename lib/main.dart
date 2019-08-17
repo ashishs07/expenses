@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import './transaction.dart';
-import './txcard.dart';
+import './widgets/user_tx.dart';
+import './widgets/tx_list.dart';
 
 void main() => runApp(MyApp());
 
@@ -20,21 +20,6 @@ class MyApp extends StatelessWidget {
 }
 
 class HomePage extends StatelessWidget {
-  final List<Transaction> transactions = [
-    Transaction(
-      id: 't1',
-      title: 'New Shoes',
-      amount: 35,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'New Watch',
-      amount: 75,
-      date: DateTime.now(),
-    ),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,22 +33,8 @@ class HomePage extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: ListView(
         children: <Widget>[
-          Card(
-            child: Text('Chart'),
-          ),
-          Card(
-              child: Column(
-            children: <Widget>[
-              TextField(),
-              TextField(),
-            ],
-          )),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: transactions.map((tx) {
-              return TxCard(tx);
-            }).toList(),
-          ),
+          UserTransaction(),
+          TransactionList(),
         ],
       ),
     );
