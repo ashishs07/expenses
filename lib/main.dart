@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import './widgets/user_tx.dart';
-import './widgets/tx_list.dart';
 
 void main() => runApp(MyApp());
 
@@ -31,12 +30,7 @@ class HomePage extends StatelessWidget {
         onPressed: () {},
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      body: ListView(
-        children: <Widget>[
-          UserTransaction(),
-          TransactionList(),
-        ],
-      ),
+      body: UserTransaction(),
     );
   }
 }
