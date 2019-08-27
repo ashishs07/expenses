@@ -7,6 +7,20 @@ class NewTx extends StatelessWidget {
 
   NewTx(this.addTransaction);
 
+  void submitTx() {
+    final enteredTitle = titleController.text;
+    final enteredAmount = double.parse(amountController.text);
+
+    if (enteredTitle == null || enteredAmount <= 0) {
+      return;
+    }
+
+    addTransaction(
+      enteredTitle,
+      enteredAmount,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -21,20 +35,20 @@ class NewTx extends StatelessWidget {
               TextField(
                 decoration: InputDecoration(labelText: 'Title'),
                 controller: titleController,
+                keyboardType: TextInputType.text,
+                onSubmitted: (_) => submitTx(),
               ),
               TextField(
                 decoration: InputDecoration(labelText: 'Amount'),
                 controller: amountController,
+                keyboardType: TextInputType.numberWithOptions(
+                    signed: true, decimal: true),
+                onSubmitted: (_) => submitTx(),
               ),
               FlatButton(
                 child: Text('Add Transaction'),
                 textColor: Colors.purple,
-                onPressed: () {
-                  addTransaction(
-                    titleController.text,
-                    double.parse(amountController.text),
-                  );
-                },
+                onPressed: submitTx,
               )
             ],
           ),

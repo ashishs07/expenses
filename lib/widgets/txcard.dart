@@ -15,7 +15,7 @@ class TxCard extends StatelessWidget {
       alignment: Alignment.center,
       decoration: _buildPriceContainerDecoration(),
       child: Text(
-        '\$${tx.amount}',
+        '\$${tx.amount.toStringAsFixed(2)}',
         style: _buildPriceStyle(),
       ),
     );
