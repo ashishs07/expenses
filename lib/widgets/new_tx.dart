@@ -1,46 +1,55 @@
 import 'package:flutter/material.dart';
 
-class NewTx extends StatelessWidget {
+class NewTx extends StatefulWidget {
   final Function addTransaction;
-  final titleController = TextEditingController();
-  final amountController = TextEditingController();
 
   NewTx(this.addTransaction);
 
-  void submitTx() {
-    final enteredTitle = titleController.text;
-    final enteredAmount = double.parse(amountController.text);
+  @override
+  _NewTxState createState() => _NewTxState();
+}
 
+class _NewTxState extends State<NewTx> {
+  String title;
+  double amount;
+
+  void submitTx() {
+    final enteredTitle = title;
+    final enteredAmount = amount;
     if (enteredTitle == null || enteredAmount <= 0) {
       return;
     }
 
-    addTransaction(
+    widget.addTransaction(
       enteredTitle,
       enteredAmount,
     );
+
+    Navigator.pop(context);
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Card(
-          child: Text('Chart'),
-        ),
-        Card(
+        Container(
+          padding: EdgeInsets.all(10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
               TextField(
                 decoration: InputDecoration(labelText: 'Title'),
-                controller: titleController,
+                onChanged: (val) {
+                  title = val;
+                },
                 keyboardType: TextInputType.text,
                 onSubmitted: (_) => submitTx(),
               ),
               TextField(
                 decoration: InputDecoration(labelText: 'Amount'),
-                controller: amountController,
+                onChanged: (val) {
+                  amount = double.parse(val);
+                },
                 keyboardType: TextInputType.numberWithOptions(
                     signed: true, decimal: true),
                 onSubmitted: (_) => submitTx(),
