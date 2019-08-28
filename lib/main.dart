@@ -12,7 +12,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: HomePage(),
       theme: ThemeData(
-        appBarTheme: AppBarTheme(color: Colors.teal),
+        primarySwatch: Colors.teal,
+        accentColor: Colors.purple,
+        floatingActionButtonTheme:
+            FloatingActionButtonThemeData(backgroundColor: Colors.teal),
       ),
     );
   }

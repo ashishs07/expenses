@@ -1,40 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../models/transaction.dart';
+import '../../models/transaction.dart';
 
 class TxCard extends StatelessWidget {
   final Transaction tx;
 
   TxCard(this.tx);
 
-  Widget _buildPriceContainer() {
+  Widget _buildPriceContainer(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(8),
       margin: EdgeInsets.all(5),
       alignment: Alignment.center,
-      decoration: _buildPriceContainerDecoration(),
+      decoration: _buildPriceContainerDecoration(context),
       child: Text(
         '\$${tx.amount.toStringAsFixed(2)}',
-        style: _buildPriceStyle(),
+        style: _buildPriceStyle(context),
       ),
     );
   }
 
-  BoxDecoration _buildPriceContainerDecoration() {
+  BoxDecoration _buildPriceContainerDecoration(BuildContext context) {
     return BoxDecoration(
       border: Border.all(
-        color: Colors.purple,
+        color: Theme.of(context).accentColor,
         width: 1.5,
       ),
     );
   }
 
-  TextStyle _buildPriceStyle() {
+  TextStyle _buildPriceStyle(BuildContext context) {
     return TextStyle(
       fontWeight: FontWeight.bold,
       fontSize: 18,
-      color: Colors.purple,
+      color: Theme.of(context).accentColor,
     );
   }
 
@@ -72,7 +72,7 @@ class TxCard extends StatelessWidget {
     return Card(
       child: Row(
         children: <Widget>[
-          _buildPriceContainer(),
+          _buildPriceContainer(context),
           Expanded(
             child: Column(
               children: <Widget>[

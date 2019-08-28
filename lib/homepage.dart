@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import './widgets/tx_list.dart';
+import './widgets/Tx/tx_list.dart';
 import './widgets/new_tx.dart';
+import './widgets/Chart/chart.dart';
 import './models/transaction.dart';
 
 class HomePage extends StatefulWidget {
@@ -18,20 +19,17 @@ class _HomePageState extends State<HomePage> {
         });
   }
 
-  final List<Transaction> _transactions = [
-    Transaction(
-      id: 't1',
-      title: 'New Shoes',
-      amount: 35,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'New Watch',
-      amount: 75,
-      date: DateTime.now(),
-    ),
-  ];
+  final List<Transaction> _transactions = [];
+
+  List<Transaction> get _recentTransactions {
+    return _transactions.where((tx) {
+      return tx.date.isAfter(
+        DateTime.now().subtract(
+          Duration(days: 7),
+        ),
+      );
+    }).toList();
+  }
 
   void _addTransaction(String title, double amount) {
     final newTx = Transaction(
@@ -49,7 +47,6 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
         title: Text('Expenses'),
         actions: <Widget>[
           IconButton(
@@ -67,7 +64,12 @@ class _HomePageState extends State<HomePage> {
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      body: TransactionList(_transactions),
+      body: Column(
+        children: <Widget>[
+          Chart(_recentTransactions),
+          TransactionList(_transactions),
+        ],
+      ),
     );
   }
 }
