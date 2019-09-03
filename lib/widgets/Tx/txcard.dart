@@ -70,18 +70,33 @@ class TxCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Row(
-        children: <Widget>[
-          _buildPriceContainer(context),
-          Expanded(
-            child: Column(
-              children: <Widget>[
-                _buildTitleContainer(),
-                _buildDateContainer(),
-              ],
+      elevation: 5,
+      child: ListTile(
+        leading: CircleAvatar(
+          radius: 35,
+          backgroundColor: Colors.white,
+          child: FittedBox(
+            child: Text(
+              '\$${tx.amount.toStringAsFixed(1)}',
+              style: _buildPriceStyle(context),
             ),
           ),
-        ],
+        ),
+        title: Text(
+          tx.title,
+          textAlign: TextAlign.start,
+          style: TextStyle(
+            fontWeight: FontWeight.w500,
+            fontSize: 18,
+          ),
+        ),
+        subtitle: Text(
+          DateFormat.yMMMd().format(tx.date),
+          textAlign: TextAlign.start,
+          style: TextStyle(
+            color: Colors.grey,
+          ),
+        ),
       ),
     );
   }

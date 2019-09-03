@@ -64,7 +64,7 @@ class _HomePageState extends State<HomePage> {
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      body: Column(
+      body: ListView(
         children: <Widget>[
           Chart(_recentTransactions),
           TransactionList(_transactions),
