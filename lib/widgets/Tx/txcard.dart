@@ -8,24 +8,15 @@ class TxCard extends StatelessWidget {
 
   TxCard(this.tx);
 
-  Widget _buildPriceContainer(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(8),
-      margin: EdgeInsets.all(5),
-      alignment: Alignment.center,
-      decoration: _buildPriceContainerDecoration(context),
-      child: Text(
-        '\$${tx.amount.toStringAsFixed(2)}',
-        style: _buildPriceStyle(context),
-      ),
-    );
-  }
-
-  BoxDecoration _buildPriceContainerDecoration(BuildContext context) {
-    return BoxDecoration(
-      border: Border.all(
-        color: Theme.of(context).accentColor,
-        width: 1.5,
+  Widget _buildLeadingWidget(BuildContext context) {
+    return CircleAvatar(
+      radius: 35,
+      backgroundColor: Colors.white,
+      child: FittedBox(
+        child: Text(
+          '₹${tx.amount.toStringAsFixed(0)}',
+          style: _buildPriceStyle(context),
+        ),
       ),
     );
   }
@@ -38,31 +29,21 @@ class TxCard extends StatelessWidget {
     );
   }
 
-  Widget _buildTitleContainer() {
-    return Container(
-      padding: EdgeInsets.all(5),
-      width: double.maxFinite,
-      child: Text(
-        tx.title,
-        textAlign: TextAlign.start,
-        style: TextStyle(
-          fontWeight: FontWeight.w500,
-          fontSize: 15,
-        ),
+  Widget _buildTitleWidget() {
+    return Text(
+      tx.title,
+      style: TextStyle(
+        fontWeight: FontWeight.bold,
+        fontSize: 18,
       ),
     );
   }
 
-  Widget _buildDateContainer() {
-    return Container(
-      padding: EdgeInsets.all(5),
-      width: double.maxFinite,
-      child: Text(
-        DateFormat.yMMMd().format(tx.date),
-        textAlign: TextAlign.start,
-        style: TextStyle(
-          color: Colors.grey,
-        ),
+  Widget _buildSubtitleWidget() {
+    return Text(
+      DateFormat.yMMMd().format(tx.date),
+      style: TextStyle(
+        color: Colors.grey,
       ),
     );
   }
@@ -72,31 +53,9 @@ class TxCard extends StatelessWidget {
     return Card(
       elevation: 5,
       child: ListTile(
-        leading: CircleAvatar(
-          radius: 35,
-          backgroundColor: Colors.white,
-          child: FittedBox(
-            child: Text(
-              '\$${tx.amount.toStringAsFixed(1)}',
-              style: _buildPriceStyle(context),
-            ),
-          ),
-        ),
-        title: Text(
-          tx.title,
-          textAlign: TextAlign.start,
-          style: TextStyle(
-            fontWeight: FontWeight.w500,
-            fontSize: 18,
-          ),
-        ),
-        subtitle: Text(
-          DateFormat.yMMMd().format(tx.date),
-          textAlign: TextAlign.start,
-          style: TextStyle(
-            color: Colors.grey,
-          ),
-        ),
+        leading: _buildLeadingWidget(context),
+        title: _buildTitleWidget(),
+        subtitle: _buildSubtitleWidget(),
       ),
     );
   }

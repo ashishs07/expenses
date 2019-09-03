@@ -28,41 +28,49 @@ class _NewTxState extends State<NewTx> {
     Navigator.of(context).pop();
   }
 
+  Widget _buildTitleTextField() {
+    return TextField(
+      decoration: InputDecoration(labelText: 'Title'),
+      onChanged: (val) {
+        title = val;
+      },
+      keyboardType: TextInputType.text,
+      onSubmitted: (_) => submitTx(),
+    );
+  }
+
+  Widget _buildAmountTextField() {
+    return TextField(
+      decoration: InputDecoration(labelText: 'Amount'),
+      onChanged: (val) {
+        amount = double.parse(val);
+      },
+      keyboardType:
+          TextInputType.numberWithOptions(signed: true, decimal: true),
+      onSubmitted: (_) => submitTx(),
+    );
+  }
+
+  Widget _buildAddFlatButton() {
+    return FlatButton(
+      child: Text('Add Transaction'),
+      textColor: Theme.of(context).accentColor,
+      onPressed: submitTx,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Container(
-          padding: EdgeInsets.all(10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: <Widget>[
-              TextField(
-                decoration: InputDecoration(labelText: 'Title'),
-                onChanged: (val) {
-                  title = val;
-                },
-                keyboardType: TextInputType.text,
-                onSubmitted: (_) => submitTx(),
-              ),
-              TextField(
-                decoration: InputDecoration(labelText: 'Amount'),
-                onChanged: (val) {
-                  amount = double.parse(val);
-                },
-                keyboardType: TextInputType.numberWithOptions(
-                    signed: true, decimal: true),
-                onSubmitted: (_) => submitTx(),
-              ),
-              FlatButton(
-                child: Text('Add Transaction'),
-                textColor: Theme.of(context).accentColor,
-                onPressed: submitTx,
-              )
-            ],
-          ),
-        )
-      ],
+    return Container(
+      padding: EdgeInsets.all(10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: <Widget>[
+          _buildTitleTextField(),
+          _buildAmountTextField(),
+          _buildAddFlatButton(),
+        ],
+      ),
     );
   }
 }

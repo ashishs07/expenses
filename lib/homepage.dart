@@ -11,14 +11,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  void startAddTxModal(BuildContext context) {
-    showModalBottomSheet(
-        context: context,
-        builder: (_) {
-          return NewTx(_addTransaction);
-        });
-  }
-
   final List<Transaction> _transactions = [];
 
   List<Transaction> get _recentTransactions {
@@ -29,6 +21,14 @@ class _HomePageState extends State<HomePage> {
         ),
       );
     }).toList();
+  }
+
+  void startAddTxModal(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (_) {
+          return NewTx(_addTransaction);
+        });
   }
 
   void _addTransaction(String title, double amount) {

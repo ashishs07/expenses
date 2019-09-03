@@ -7,6 +7,41 @@ class Bar extends StatelessWidget {
 
   Bar(this.title, this.spending, this.totalSpending);
 
+  Widget _buildBottomContainer() {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(width: 1, color: Colors.grey),
+        color: Color.fromRGBO(220, 220, 220, 1),
+        borderRadius: BorderRadius.circular(10),
+      ),
+    );
+  }
+
+  Widget _buildTopColoredContainer(BuildContext context) {
+    return FractionallySizedBox(
+      heightFactor: totalSpending <= 0 ? 0 : spending / totalSpending,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).primaryColor,
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildOnlyBar(BuildContext context) {
+    return Container(
+      height: 60,
+      width: 10,
+      child: Stack(
+        children: <Widget>[
+          _buildBottomContainer(),
+          _buildTopColoredContainer(context),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -15,31 +50,7 @@ class Bar extends StatelessWidget {
         children: <Widget>[
           Container(child: Text(title)),
           SizedBox(height: 5),
-          Container(
-            height: 60,
-            width: 10,
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(width: 1, color: Colors.grey),
-                    color: Color.fromRGBO(220, 220, 220, 1),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                FractionallySizedBox(
-                  heightFactor:
-                      totalSpending <= 0 ? 0 : spending / totalSpending,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
+          _buildOnlyBar(context),
           SizedBox(height: 5),
           FittedBox(
             child: Text(spending.toStringAsFixed(0)),

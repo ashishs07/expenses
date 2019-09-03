@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
         accentColor: Colors.purple,
         floatingActionButtonTheme:
             FloatingActionButtonThemeData(backgroundColor: Colors.teal),
+        fontFamily: 'Livvic',
       ),
     );
   }
