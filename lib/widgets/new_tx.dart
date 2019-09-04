@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class NewTx extends StatefulWidget {
   final Function addTransaction;
@@ -12,20 +13,34 @@ class NewTx extends StatefulWidget {
 class _NewTxState extends State<NewTx> {
   String title;
   double amount;
+  DateTime _selectedDate;
 
   void submitTx() {
     final enteredTitle = title;
     final enteredAmount = amount;
-    if (enteredTitle == null || enteredAmount <= 0) {
+    if (enteredTitle == null || enteredAmount <= 0 || _selectedDate == null) {
       return;
     }
 
-    widget.addTransaction(
-      enteredTitle,
-      enteredAmount,
-    );
+    widget.addTransaction(enteredTitle, enteredAmount, _selectedDate);
 
     Navigator.of(context).pop();
+  }
+
+  void _presentDatePicker() {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2019),
+      lastDate: DateTime.now(),
+    ).then((pickedDate) {
+      if (pickedDate == null) {
+        return;
+      }
+      setState(() {
+        _selectedDate = pickedDate;
+      });
+    });
   }
 
   Widget _buildTitleTextField() {
@@ -51,10 +66,16 @@ class _NewTxState extends State<NewTx> {
     );
   }
 
-  Widget _buildAddFlatButton() {
-    return FlatButton(
-      child: Text('Add Transaction'),
-      textColor: Theme.of(context).accentColor,
+  Widget _buildAddRaisedButton() {
+    return RaisedButton(
+      child: Text(
+        'Add Transaction',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 16,
+        ),
+      ),
+      color: Theme.of(context).primaryColor,
       onPressed: submitTx,
     );
   }
@@ -68,7 +89,31 @@ class _NewTxState extends State<NewTx> {
         children: <Widget>[
           _buildTitleTextField(),
           _buildAmountTextField(),
-          _buildAddFlatButton(),
+          Container(
+              height: 70,
+              child: Row(
+                children: <Widget>[
+                  Text(
+                    _selectedDate == null
+                        ? 'No Date Selected !'
+                        : DateFormat.yMd().format(_selectedDate),
+                    style: TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
+                  FlatButton(
+                    child: Text(
+                      'Choose Date',
+                      style: TextStyle(
+                          color: Theme.of(context).accentColor,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    onPressed: _presentDatePicker,
+                  )
+                ],
+              )),
+          _buildAddRaisedButton(),
         ],
       ),
     );

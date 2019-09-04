@@ -52,8 +52,11 @@ class Bar extends StatelessWidget {
           SizedBox(height: 5),
           _buildOnlyBar(context),
           SizedBox(height: 5),
-          FittedBox(
-            child: Text(spending.toStringAsFixed(0)),
+          Container(
+            height: 20,
+            child: FittedBox(
+              child: Text('₹${spending.toStringAsFixed(0)}'),
+            ),
           ),
         ],
       ),

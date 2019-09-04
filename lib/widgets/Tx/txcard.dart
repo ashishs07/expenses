@@ -5,8 +5,9 @@ import '../../models/transaction.dart';
 
 class TxCard extends StatelessWidget {
   final Transaction tx;
+  final Function delTx;
 
-  TxCard(this.tx);
+  TxCard(this.tx, this.delTx);
 
   Widget _buildLeadingWidget(BuildContext context) {
     return CircleAvatar(
@@ -48,6 +49,14 @@ class TxCard extends StatelessWidget {
     );
   }
 
+  Widget _buildTrailingWidget(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.delete),
+      color: Theme.of(context).errorColor,
+      onPressed: () => delTx(tx.id),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -56,6 +65,7 @@ class TxCard extends StatelessWidget {
         leading: _buildLeadingWidget(context),
         title: _buildTitleWidget(),
         subtitle: _buildSubtitleWidget(),
+        trailing: _buildTrailingWidget(context),
       ),
     );
   }

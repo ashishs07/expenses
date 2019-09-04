@@ -31,15 +31,21 @@ class _HomePageState extends State<HomePage> {
         });
   }
 
-  void _addTransaction(String title, double amount) {
+  void _addTransaction(String title, double amount, DateTime date) {
     final newTx = Transaction(
       title: title,
       amount: amount,
-      date: DateTime.now(),
-      id: 'ss',
+      date: date,
+      id: DateTime.now().toString(),
     );
     setState(() {
       _transactions.add(newTx);
+    });
+  }
+
+  void _deleteTransaction(String id) {
+    setState(() {
+      _transactions.removeWhere((tx) => tx.id == id);
     });
   }
 
@@ -67,7 +73,7 @@ class _HomePageState extends State<HomePage> {
       body: ListView(
         children: <Widget>[
           Chart(_recentTransactions),
-          TransactionList(_transactions),
+          TransactionList(_transactions, _deleteTransaction),
         ],
       ),
     );

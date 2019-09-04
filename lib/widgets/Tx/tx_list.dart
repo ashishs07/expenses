@@ -6,8 +6,9 @@ import './txcard.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
+  final Function delTx;
 
-  TransactionList(this.transactions);
+  TransactionList(this.transactions, this.delTx);
 
   Widget _buildEmptyPageReplacement() {
     return Column(
@@ -29,7 +30,7 @@ class TransactionList extends StatelessWidget {
   Widget _buildListViewCards() {
     return ListView.builder(
       itemBuilder: (context, index) {
-        return TxCard(transactions[index]);
+        return TxCard(transactions[index], delTx);
       },
       itemCount: transactions.length,
     );
