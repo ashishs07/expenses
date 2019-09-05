@@ -1,16 +1,33 @@
-# expenses
+## Flutter Project.
 
-A new Flutter project.
+Manage your Expenses 
 
-## Getting Started
+[Material Theme](https://material.io/).
 
-This project is a starting point for a Flutter application.
+[Flutter](https://flutter.dev/) and [dart](https://dart.dev/).
 
-A few resources to get you started if this is your first Flutter project:
+Using [Google Fonts](https://fonts.google.com/).
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+Screenshots(09/06/2019)-
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<div style="text-align: center">
+  <table>
+    <tr>
+      <td style="text-align: center">
+      <img src="https://i.imgur.com/5EyLQhd.png" width="200"/>
+      </td>
+      <td style="text-align: center">
+      <img src="https://i.imgur.com/fELT4UF.png" width="200"/>
+      </td>
+      <td style="text-align: center">
+      <img src="https://i.imgur.com/NkDVlX2.png" width="200"/>
+      </td>
+      <td style="text-align: center">
+      <img src="https://i.imgur.com/k23Kkfy.png" width="200"/>
+      </td>
+    </tr>
+  </table>
+</div>
+
+### Contact
+[Website](https://ashishs07.github.io/Website/)
