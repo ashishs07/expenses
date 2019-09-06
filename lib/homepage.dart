@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import './widgets/Tx/tx_list.dart';
 import './widgets/new_tx.dart';
 import './widgets/Chart/chart.dart';
+import './widgets/Navigator/navi.dart';
 import './models/transaction.dart';
 
 class HomePage extends StatefulWidget {
@@ -72,6 +73,7 @@ class _HomePageState extends State<HomePage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: ListView(
         children: <Widget>[
+          WeekNavi(),
           Chart(_recentTransactions),
           TransactionList(_transactions, _deleteTransaction),
         ],
