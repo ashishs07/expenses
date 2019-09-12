@@ -29,9 +29,9 @@ class Bar extends StatelessWidget {
     );
   }
 
-  Widget _buildOnlyBar(BuildContext context) {
+  Widget _buildOnlyBar(BuildContext context, double height) {
     return Container(
-      height: 60,
+      height: height,
       width: 10,
       child: Stack(
         alignment: AlignmentDirectional.bottomEnd,
@@ -45,22 +45,28 @@ class Bar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 110,
-      child: Column(
-        children: <Widget>[
-          Container(child: Text(title)),
-          SizedBox(height: 5),
-          _buildOnlyBar(context),
-          SizedBox(height: 5),
-          Container(
-            height: 20,
-            child: FittedBox(
-              child: Text('₹${spending.toStringAsFixed(0)}'),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Column(
+          children: <Widget>[
+            Container(
+              height: constraints.maxHeight * 0.15,
+              child: FittedBox(
+                child: Text(title),
+              ),
             ),
-          ),
-        ],
-      ),
+            SizedBox(height: constraints.maxHeight * 0.05),
+            _buildOnlyBar(context, constraints.maxHeight * 0.60),
+            SizedBox(height: constraints.maxHeight * 0.05),
+            Container(
+              height: constraints.maxHeight * 0.15,
+              child: FittedBox(
+                child: Text('₹${spending.toStringAsFixed(0)}'),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

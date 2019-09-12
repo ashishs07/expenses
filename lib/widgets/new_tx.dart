@@ -84,8 +84,8 @@ class _NewTxState extends State<NewTx> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
+      child: ListView(
+        //crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
           _buildTitleTextField(),
           _buildAmountTextField(),
@@ -101,15 +101,20 @@ class _NewTxState extends State<NewTx> {
                       fontSize: 14,
                     ),
                   ),
-                  FlatButton(
-                    child: Text(
-                      'Choose Date',
-                      style: TextStyle(
-                          color: Theme.of(context).accentColor,
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold),
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: FlatButton(
+                        child: Text(
+                          'Choose Date',
+                          style: TextStyle(
+                              color: Theme.of(context).accentColor,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        onPressed: _presentDatePicker,
+                      ),
                     ),
-                    onPressed: _presentDatePicker,
                   )
                 ],
               )),

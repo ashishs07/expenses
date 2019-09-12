@@ -23,6 +23,8 @@ class _HomePageState extends State<HomePage> {
     }).toList();
   }
 
+  bool _showChart = false;
+
   void startAddTxModal(BuildContext context) {
     showModalBottomSheet(
         context: context,
@@ -49,20 +51,53 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  Widget _landscapeView(AppBar appBar) {
+    return Column(
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text('Show Chart'),
+            Switch(
+              value: _showChart,
+              onChanged: (val) {
+                setState(() {
+                  _showChart = val;
+                });
+              },
+            ),
+          ],
+        ),
+        _showChart
+            ? Container(
+                height: MediaQuery.of(context).size.height * 0.5,
+                width: MediaQuery.of(context).size.width * 0.7,
+                child: Chart(_recentTransactions),
+              )
+            : Expanded(
+                child: Container(
+                  child: TransactionList(_transactions, _deleteTransaction),
+                ),
+              ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final appBar = AppBar(
+      title: Text('Expenses'),
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.add),
+          onPressed: () {
+            startAddTxModal(context);
+          },
+        )
+      ],
+    );
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Expenses'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () {
-              startAddTxModal(context);
-            },
-          )
-        ],
-      ),
+      appBar: appBar,
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
@@ -70,12 +105,26 @@ class _HomePageState extends State<HomePage> {
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      body: ListView(
-        children: <Widget>[
-          Chart(_recentTransactions),
-          TransactionList(_transactions, _deleteTransaction),
-        ],
-      ),
+      body: MediaQuery.of(context).orientation == Orientation.portrait
+          ? ListView(
+              children: <Widget>[
+                Container(
+                  height: (MediaQuery.of(context).size.height -
+                          appBar.preferredSize.height -
+                          MediaQuery.of(context).padding.top) *
+                      0.25,
+                  child: Chart(_recentTransactions),
+                ),
+                Container(
+                  height: (MediaQuery.of(context).size.height -
+                          appBar.preferredSize.height -
+                          MediaQuery.of(context).padding.top) *
+                      0.75,
+                  child: TransactionList(_transactions, _deleteTransaction),
+                ),
+              ],
+            )
+          : _landscapeView(appBar),
     );
   }
 }
