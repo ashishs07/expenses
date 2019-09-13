@@ -66,6 +66,36 @@ class _NewTxState extends State<NewTx> {
     );
   }
 
+  Widget _buildDateRow() {
+    return Row(
+      children: <Widget>[
+        Text(
+          _selectedDate == null
+              ? 'No Date Selected !'
+              : DateFormat.yMd().format(_selectedDate),
+          style: TextStyle(
+            fontSize: 14,
+          ),
+        ),
+        Expanded(
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: FlatButton(
+              child: Text(
+                'Choose Date',
+                style: TextStyle(
+                    color: Theme.of(context).accentColor,
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold),
+              ),
+              onPressed: _presentDatePicker,
+            ),
+          ),
+        )
+      ],
+    );
+  }
+
   Widget _buildAddRaisedButton() {
     return RaisedButton(
       child: Text(
@@ -85,39 +115,10 @@ class _NewTxState extends State<NewTx> {
     return Container(
       padding: EdgeInsets.all(10),
       child: ListView(
-        //crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
           _buildTitleTextField(),
           _buildAmountTextField(),
-          Container(
-              height: 70,
-              child: Row(
-                children: <Widget>[
-                  Text(
-                    _selectedDate == null
-                        ? 'No Date Selected !'
-                        : DateFormat.yMd().format(_selectedDate),
-                    style: TextStyle(
-                      fontSize: 14,
-                    ),
-                  ),
-                  Expanded(
-                    child: Align(
-                      alignment: Alignment.centerRight,
-                      child: FlatButton(
-                        child: Text(
-                          'Choose Date',
-                          style: TextStyle(
-                              color: Theme.of(context).accentColor,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        onPressed: _presentDatePicker,
-                      ),
-                    ),
-                  )
-                ],
-              )),
+          _buildDateRow(),
           _buildAddRaisedButton(),
         ],
       ),

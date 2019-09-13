@@ -10,21 +10,42 @@ class TransactionList extends StatelessWidget {
 
   TransactionList(this.transactions, this.delTx);
 
-  Widget _buildEmptyPageReplacement() {
-    return Column(
-      children: <Widget>[
-        SizedBox(height: 10),
-        Container(
-          height: 200,
-          child: Image.asset(
-            'assets/images/waiting.png',
-            fit: BoxFit.cover,
-          ),
-        ),
-        SizedBox(height: 10),
-        Text('No Transactions'),
-      ],
-    );
+  Widget _buildEmptyPageReplacement(double height, BuildContext context) {
+    return MediaQuery.of(context).orientation == Orientation.portrait
+        ? Column(
+            children: <Widget>[
+              SizedBox(height: height * 0.05),
+              Container(
+                height: height <= 800 ? height * 0.5 : height * 0.8,
+                child: Image.asset(
+                  'assets/images/waiting.png',
+                  fit: BoxFit.cover,
+                ),
+              ),
+              SizedBox(height: height * .05),
+              Container(
+                height: height * 0.1,
+                child: Text('No Transactions'),
+              ),
+            ],
+          )
+        : Column(
+            children: <Widget>[
+              SizedBox(height: height * 0.05),
+              Container(
+                height: height * 0.8,
+                child: Image.asset(
+                  'assets/images/waiting.png',
+                  fit: BoxFit.cover,
+                ),
+              ),
+              SizedBox(height: height * .05),
+              Container(
+                height: height * 0.1,
+                child: Text('No Transactions'),
+              ),
+            ],
+          );
   }
 
   Widget _buildListViewCards() {
@@ -38,10 +59,14 @@ class TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: transactions.isEmpty
-          ? _buildEmptyPageReplacement()
-          : _buildListViewCards(),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Center(
+          child: transactions.isEmpty
+              ? _buildEmptyPageReplacement(constraints.maxHeight, context)
+              : _buildListViewCards(),
+        );
+      },
     );
   }
 }

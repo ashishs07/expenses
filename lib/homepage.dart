@@ -51,6 +51,27 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  Widget _portraitView(AppBar appBar) {
+    return ListView(
+      children: <Widget>[
+        Container(
+          height: (MediaQuery.of(context).size.height -
+                  appBar.preferredSize.height -
+                  MediaQuery.of(context).padding.top) *
+              0.25,
+          child: Chart(_recentTransactions),
+        ),
+        Container(
+          height: (MediaQuery.of(context).size.height -
+                  appBar.preferredSize.height -
+                  MediaQuery.of(context).padding.top) *
+              0.75,
+          child: TransactionList(_transactions, _deleteTransaction),
+        ),
+      ],
+    );
+  }
+
   Widget _landscapeView(AppBar appBar) {
     return Column(
       children: <Widget>[
@@ -75,9 +96,7 @@ class _HomePageState extends State<HomePage> {
                 child: Chart(_recentTransactions),
               )
             : Expanded(
-                child: Container(
-                  child: TransactionList(_transactions, _deleteTransaction),
-                ),
+                child: TransactionList(_transactions, _deleteTransaction),
               ),
       ],
     );
@@ -98,33 +117,19 @@ class _HomePageState extends State<HomePage> {
     );
     return Scaffold(
       appBar: appBar,
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          startAddTxModal(context);
-        },
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: MediaQuery.of(context).orientation == Orientation.portrait
-          ? ListView(
-              children: <Widget>[
-                Container(
-                  height: (MediaQuery.of(context).size.height -
-                          appBar.preferredSize.height -
-                          MediaQuery.of(context).padding.top) *
-                      0.25,
-                  child: Chart(_recentTransactions),
-                ),
-                Container(
-                  height: (MediaQuery.of(context).size.height -
-                          appBar.preferredSize.height -
-                          MediaQuery.of(context).padding.top) *
-                      0.75,
-                  child: TransactionList(_transactions, _deleteTransaction),
-                ),
-              ],
-            )
+          ? _portraitView(appBar)
           : _landscapeView(appBar),
+      floatingActionButton:
+          MediaQuery.of(context).orientation == Orientation.portrait
+              ? FloatingActionButton(
+                  child: Icon(Icons.add),
+                  onPressed: () {
+                    startAddTxModal(context);
+                  },
+                )
+              : null,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
