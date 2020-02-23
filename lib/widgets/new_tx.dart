@@ -11,18 +11,23 @@ class NewTx extends StatefulWidget {
 }
 
 class _NewTxState extends State<NewTx> {
-  String title;
-  double amount;
+  final _formKey = GlobalKey<FormState>();
+
+  final _title = TextEditingController();
+  final _amount = TextEditingController();
   DateTime _selectedDate;
 
   void submitTx() {
-    final enteredTitle = title;
-    final enteredAmount = amount;
-    if (enteredTitle == null || enteredAmount <= 0 || _selectedDate == null) {
+    if (!_formKey.currentState.validate()) {
       return;
     }
+    if (_selectedDate == null) {
+      return;
+    }
+    _formKey.currentState.save();
 
-    widget.addTransaction(enteredTitle, enteredAmount, _selectedDate);
+    widget.addTransaction(
+        _title.text, double.parse(_amount.text), _selectedDate);
 
     Navigator.of(context).pop();
   }
@@ -43,26 +48,61 @@ class _NewTxState extends State<NewTx> {
     });
   }
 
-  Widget _buildTitleTextField() {
-    return TextField(
-      decoration: InputDecoration(labelText: 'Title'),
-      onChanged: (val) {
-        title = val;
-      },
-      keyboardType: TextInputType.text,
-      onSubmitted: (_) => submitTx(),
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(10),
+      child: Form(
+        key: _formKey,
+        child: ListView(
+          children: <Widget>[
+            _buildTitleTTF(),
+            _buildAmountTTF(),
+            _buildDateRow(),
+            _buildAddRaisedButton(),
+          ],
+        ),
+      ),
     );
   }
 
-  Widget _buildAmountTextField() {
-    return TextField(
-      decoration: InputDecoration(labelText: 'Amount'),
-      onChanged: (val) {
-        amount = double.parse(val);
+  Widget _buildTitleTTF() {
+    return TextFormField(
+      decoration: InputDecoration(labelText: 'Title'),
+      keyboardType: TextInputType.text,
+      controller: _title,
+      validator: (val) {
+        if (val.isEmpty) {
+          return 'Enter Title.';
+        }
+        return null;
       },
-      keyboardType:
-          TextInputType.numberWithOptions(signed: true, decimal: true),
-      onSubmitted: (_) => submitTx(),
+      onSaved: (val) {
+        _title.text = val;
+      },
+    );
+  }
+
+  Widget _buildAmountTTF() {
+    return TextFormField(
+      decoration: InputDecoration(labelText: 'Amount'),
+      keyboardType: TextInputType.numberWithOptions(decimal: true),
+      controller: _amount,
+      validator: (val) {
+        if (val.isEmpty) {
+          return 'Enter Amount';
+        }
+        if (double.tryParse(val) == null) {
+          return 'Enter valid Amount';
+        }
+        if (double.parse(val) <= 0) {
+          return 'Enter Amount';
+        }
+        return null;
+      },
+      onSaved: (val) {
+        _amount.text = val;
+      },
     );
   }
 
@@ -107,21 +147,6 @@ class _NewTxState extends State<NewTx> {
       ),
       color: Theme.of(context).primaryColor,
       onPressed: submitTx,
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(10),
-      child: ListView(
-        children: <Widget>[
-          _buildTitleTextField(),
-          _buildAmountTextField(),
-          _buildDateRow(),
-          _buildAddRaisedButton(),
-        ],
-      ),
     );
   }
 }

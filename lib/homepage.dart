@@ -51,6 +51,37 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  @override
+  Widget build(BuildContext context) {
+    final appBar = AppBar(
+      title: Text('Expenses'),
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.add),
+          onPressed: () {
+            startAddTxModal(context);
+          },
+        )
+      ],
+    );
+    return Scaffold(
+      appBar: appBar,
+      body: MediaQuery.of(context).orientation == Orientation.portrait
+          ? _portraitView(appBar)
+          : _landscapeView(appBar),
+      floatingActionButton:
+          MediaQuery.of(context).orientation == Orientation.portrait
+              ? FloatingActionButton(
+                  child: Icon(Icons.add),
+                  onPressed: () {
+                    startAddTxModal(context);
+                  },
+                )
+              : null,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+    );
+  }
+
   Widget _portraitView(AppBar appBar) {
     return ListView(
       children: <Widget>[
@@ -99,37 +130,6 @@ class _HomePageState extends State<HomePage> {
                 child: TransactionList(_transactions, _deleteTransaction),
               ),
       ],
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final appBar = AppBar(
-      title: Text('Expenses'),
-      actions: <Widget>[
-        IconButton(
-          icon: Icon(Icons.add),
-          onPressed: () {
-            startAddTxModal(context);
-          },
-        )
-      ],
-    );
-    return Scaffold(
-      appBar: appBar,
-      body: MediaQuery.of(context).orientation == Orientation.portrait
-          ? _portraitView(appBar)
-          : _landscapeView(appBar),
-      floatingActionButton:
-          MediaQuery.of(context).orientation == Orientation.portrait
-              ? FloatingActionButton(
-                  child: Icon(Icons.add),
-                  onPressed: () {
-                    startAddTxModal(context);
-                  },
-                )
-              : null,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

@@ -1,14 +1,6 @@
-## Flutter Project.
+# Manage Your Expenses
 
-Manage your Expenses 
-
-[Material Theme](https://material.io/).
-
-[Flutter](https://flutter.dev/) and [dart](https://dart.dev/).
-
-Using [Google Fonts](https://fonts.google.com/).
-
-Screenshots(09/06/2019)-
+![Built For Android](https://img.shields.io/badge/Built_For-Android-brightgreen.svg?style=for-the-badge)  ![Built For iOS](https://img.shields.io/badge/Built_For-iOS-black.svg?style=for-the-badge)
 
 <div style="text-align: center">
   <table>
@@ -29,5 +21,4 @@ Screenshots(09/06/2019)-
   </table>
 </div>
 
-### Contact
-[Website](https://ashishs07.github.io/Website/)
+[![Buy Me A Coffee](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/ashishs07)
